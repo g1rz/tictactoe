@@ -1,7 +1,7 @@
 import React from 'react';
 import './Board.sass';
 
-const Board = ({ size }) => {
+const Board = ({ size, users, activeUser }) => {
     const [board, setBoard] = React.useState(Array(size).fill(Array(size).fill(null)));
     const [countSteps, setCountSteps] = React.useState(0);
 
@@ -13,13 +13,9 @@ const Board = ({ size }) => {
             return false;
         }
 
-        // const newBoard =  board.map(function (arr) {
-        //     return arr.slice();
-        // });
-
         const newBoard = JSON.parse(JSON.stringify(board));
 
-        newBoard[y][x] = countSteps % 2 === 0 ? 'x' : '0';
+        newBoard[y][x] = countSteps % 2 === 0 ? 'X' : '0';
         setBoard(newBoard);
         setCountSteps(countSteps + 1);
 
@@ -28,6 +24,13 @@ const Board = ({ size }) => {
         if (winner) {
             setTimeout(() => {
                 alert('Победил ' + winner);
+                restart();
+            }, 100);
+        }
+
+        if (size * size - 1 === countSteps && !winner) {
+            setTimeout(() => {
+                alert('Ничья');
                 restart();
             }, 100);
         }
