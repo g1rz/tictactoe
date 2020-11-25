@@ -18,14 +18,18 @@ function App() {
         },
     ];
 
-    const [activeUser, setActiveUser] = React.useState(users[0].id);
+    const [activeUserID, setActiveUserID] = React.useState(users[0].id);
+
+    const changeActiveUser = (id) => {
+        setActiveUserID(id);
+    }
 
     return (
         <div className="App">
             <div className="container">
                 <div className="row row--space-b">
-                    <Gamers users={users} activeUser={activeUser} />
-                    <Board size={3} users={users} activeUser={activeUser} />
+                    <Gamers users={users} activeUserID={activeUserID} />
+                    <Board size={3} users={users} activeUserID={activeUserID} changeActiveUser={changeActiveUser}/>
                 </div>
             </div>
         </div>

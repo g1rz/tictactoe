@@ -1,7 +1,7 @@
 import React from 'react';
 import './Board.sass';
 
-const Board = ({ size, users, activeUser }) => {
+const Board = ({ size, users, activeUserID, changeActiveUser }) => {
     const [board, setBoard] = React.useState(Array(size).fill(Array(size).fill(null)));
     const [countSteps, setCountSteps] = React.useState(0);
 
@@ -15,7 +15,7 @@ const Board = ({ size, users, activeUser }) => {
 
         const newBoard = JSON.parse(JSON.stringify(board));
 
-        newBoard[y][x] = countSteps % 2 === 0 ? 'X' : '0';
+        newBoard[y][x] = users.find(user => user.id === activeUserID).type;//countSteps % 2 === 0 ? 'X' : '0';
         setBoard(newBoard);
         setCountSteps(countSteps + 1);
 
@@ -34,6 +34,8 @@ const Board = ({ size, users, activeUser }) => {
                 restart();
             }, 100);
         }
+
+        changeActiveUser(users.find(user => user.id !== activeUserID).id)
     };
 
     const restart = () => {
